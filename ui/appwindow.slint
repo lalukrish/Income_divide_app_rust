@@ -7,6 +7,7 @@ import { Button, VerticalBox, LineEdit } from "std-widgets.slint";
 export component AppWindow inherits Window {
 
    in property <string> results:"";
+   property <bool> opnencurtain;
     callback divide-income(string);
 
     background: #1b3251;
@@ -39,7 +40,9 @@ GridLayout {
                         text: "calculate";
                         primary:true;
                         height: 35px;
-                        clicked => {divide-income(income.text)}
+                        clicked => {
+                            root.opnencurtain=!root.opnencurtain;
+                            divide-income(income.text)}
                     }
                   }
                 Row{
@@ -53,6 +56,31 @@ GridLayout {
                                 font-weight: 500;
                                 text: root.results;
                             }
+                            //left rectangle
+
+                            Rectangle {
+                                background: #333333;
+                                x: 0;
+                                width: opnencurtain ? 0px : parent.width/2;
+                                height: parent.height;
+                                animate width {
+                                     duration: 250ms;easing: ease-in;
+                                }
+                            }
+
+                            //right rectangle
+                            Rectangle {
+                                background: #333333;
+                                x: opnencurtain?parent.width : parent.width/2;
+                                height: parent.height;
+                                animate width {
+                                     duration: 250ms;easing: ease-in;
+                                }
+                                animate x {
+                                    duration: 250ms;easing: ease-in;
+                               }
+                            }
+
                         }
                     }
                 }
